@@ -26,6 +26,20 @@ export default class MyApp extends Component{
      this.setState(newState)
    }
 
+populateList= async ()=>{
+  const response = await fetch('https://philborgassessment.herokuapp.com/messages/')
+  const json = await response.json()
+  this.setState({messages: [...json]})
+}
+
+depopulateList= async ()=>{
+  const response = await fetch('https://philborgassessment.herokuapp.com/messages/')
+  const json = await response.json()
+  this.setState({messages: json})
+}
+
+
+
 
 
   render(){
@@ -37,7 +51,7 @@ export default class MyApp extends Component{
       </View>
 
       <View style={styles.comp2}>
-      <Messages messageList={this.state.messages} />
+      <Messages console={this.console} depopulateList={this.depopulateList} populateList={this.populateList} messageList={this.state.messages} />
       </View>
 
 

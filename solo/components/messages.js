@@ -7,9 +7,11 @@ export default class Messages extends Component{
   constructor(){
     super();
     this.state={
+
       isComposing:false
     }
   }
+
 
 
   compose=()=>{
@@ -28,6 +30,8 @@ export default class Messages extends Component{
 
       {this.props.messageList.sort((m1,m2)=>m1.id-m2.id).map(message=>
         <Message
+          key={message.id}
+          populateList={this.props.populateList}
           id={message.id}
           name={message.name}
           message={message.message}
@@ -38,13 +42,15 @@ export default class Messages extends Component{
   else if (this.state.isComposing){
     return(
       <View>
-      <Composition />
+      <Composition populateList={this.props.populateList}/>
       <Button
         title="finished sending?"
         onPress={this.returnToInbox}/>
 
       {this.props.messageList.map(message=>
         <Message
+          key={message.id}
+          populateList={this.props.populateList}
           id={message.id}
           name={message.name}
           message={message.message}

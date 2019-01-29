@@ -13,7 +13,7 @@ export default class Composition extends Component{
 
 
   newMessage = async () => {
-  
+
   let sender=this.state.sender
   let message=this.state.msg
   let newMessage={}
@@ -30,9 +30,8 @@ export default class Composition extends Component{
      'Accept':'application/json'
    }
  })
- const response = await fetch('https://philborgassessment.herokuapp.com/messages/')
- const json = await response.json()
- this.setState({messages: json})
+  
+  this.props.populateList()
 }
 
   render(){

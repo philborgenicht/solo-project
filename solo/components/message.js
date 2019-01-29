@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {AppRegistry, StyleSheet, View, Text, TextInput, Switch, Button, Alert} from 'react-native'
 
 export default class Message extends Component{
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state={
       isEditable: false,
       newName:"",
@@ -20,13 +20,10 @@ export default class Message extends Component{
     await fetch(`https://philborgassessment.herokuapp.com/messages/${id}`, {
      method: 'DELETE',
    })
-   const response = await fetch('https://philborgassessment.herokuapp.com/messages/')
-   const json = await response.json()
-   this.setState({messages: json})
+   this.props.populateList()
   }
 
   updateMessage = async () => {
-
     let newName=this.state.newName
     let newMsg=this.state.newMsg
     let id = this.props.id
@@ -41,9 +38,11 @@ export default class Message extends Component{
        'Accept': 'application/json'
      }
    })
-   const response = await fetch('https://philborgassessment.herokuapp.com/messages/')
-   const json = await response.json()
-   this.setState({isEditable: false, messages: [...json]})
+   this.setState({isEditable: false})
+   this.props.populateList()
+
+
+
  }
 
 
@@ -58,7 +57,7 @@ export default class Message extends Component{
       <Text style={{color:'blue'}}>Message:{this.props.message}</Text>
       <Switch
       value={this.state.isEditable}
-      onValueChange={()=>this.updateMessage()}
+      onValueChange={(value)=>this.updateMessage(value)}
       id={this.props.id}/>
       <TextInput onChangeText={(newName)=>this.setState({newName:newName})} style={{backgroundColor:'pink', color:'purple'}} id={this.props.id} placeholder="edit name"/>
 
